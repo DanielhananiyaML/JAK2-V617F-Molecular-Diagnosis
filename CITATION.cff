@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+title: "JAK2 V617F Molecular Diagnosis"
+message: "If you use this repository in academic, educational, or professional work, please cite it."
+type: software
+authors:
+  - family-names: Hananiya
+    given-names: Daniel
+    orcid: ""
+repository-code: "https://github.com/DanielhananiyaML/JAK2-V617F-Molecular-Diagnosis"
+license: MIT
+version: 1.0.0
+date-released: 2026-08-27
+abstract: "A molecular hematology and bioinformatics portfolio project focused on characterization, annotation, and diagnostic interpretation of the JAK2 V617F variant in classical myeloproliferative neoplasms."
+keywords:
+  - JAK2
+  - JAK2 V617F
+  - myeloproliferative neoplasms
+  - molecular diagnostics
+  - bioinformatics
+  - hematology
+  - genomics
+  - variant annotation
