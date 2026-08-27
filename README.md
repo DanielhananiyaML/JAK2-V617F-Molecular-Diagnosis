@@ -5,939 +5,200 @@
 **Author:** Daniel Hananiya  
 **Field:** Medical Laboratory Science | Molecular Biology | Bioinformatics | Molecular Diagnostics  
 **Project Type:** Molecular Hematology / Bioinformatics Portfolio Project  
-**Focus:** JAK2 V617F • Myeloproliferative Neoplasms • Molecular Diagnostics • Variant Interpretation • Bioinformatics
+**Status:** **Completed reproducible portfolio workflow**  
+**Focus:** JAK2 V617F • Myeloproliferative Neoplasms • Molecular Diagnostics • Variant Interpretation • Sequence Analysis
 
 ---
 
 ## Abstract
 
-The **JAK2 V617F mutation** is one of the most clinically important acquired molecular alterations in the classical Philadelphia chromosome-negative myeloproliferative neoplasms (MPNs), particularly **polycythemia vera (PV), essential thrombocythemia (ET), and primary myelofibrosis (PMF)**.
+The **JAK2 V617F mutation** is a major acquired molecular driver of the classical Philadelphia chromosome-negative myeloproliferative neoplasms (MPNs), particularly **polycythemia vera (PV), essential thrombocythemia (ET), and primary myelofibrosis (PMF)**.
 
-This project explores the JAK2 V617F variant from a multidisciplinary perspective, integrating **hematology, molecular biology, molecular diagnostics, genomic variant annotation, and bioinformatics**.
+This repository presents a reproducible molecular hematology and bioinformatics case study integrating molecular biology, sequence analysis, public genomic resources, variant interpretation, diagnostic reasoning, automated testing, and scientific documentation.
 
-The project follows the molecular journey from the underlying nucleotide substitution to its predicted protein consequence and clinical significance:
+The focal variant is **JAK2 NM_004972.4:c.1849G>T (p.Val617Phe; V617F)**, linked to **rs77375493** and represented on GRCh38 as **NC_000009.12:g.5073770G>T**. The computational workflow retrieves the reference transcript from NCBI at runtime, verifies the reference nucleotide at c.1849, extracts the affected codon, introduces the G>T substitution in silico, translates the reference and alternate codons, and confirms the Valine-to-Phenylalanine consequence.
 
-> **DNA variant → transcript-level annotation → protein alteration → JAK-STAT signaling dysregulation → clonal myeloid proliferation → molecular diagnosis**
+The project is explicitly designed as an **educational/research and professional portfolio workflow, not a validated clinical diagnostic assay**.
 
-The central variant investigated is:
-
-**JAK2 NM_004972.4:c.1849G>T (p.Val617Phe)**
-
-The project is intended as a reproducible educational and professional portfolio demonstrating how molecular data can be translated into biologically meaningful and clinically relevant information.
+> **DNA variant → transcript annotation → codon change → amino-acid consequence → JAK2 signaling dysregulation → MPN molecular context**
 
 ---
 
-## Table of Contents
+## Project Objectives
 
-- [1. Project Overview](#1-project-overview)
-- [2. Biological Background](#2-biological-background)
-- [3. The JAK2 V617F Variant](#3-the-jak2-v617f-variant)
-- [4. Molecular Mechanism](#4-molecular-mechanism)
-- [5. Clinical Significance](#5-clinical-significance)
-- [6. Molecular Diagnostic Workflow](#6-molecular-diagnostic-workflow)
-- [7. Bioinformatics Workflow](#7-bioinformatics-workflow)
-- [8. Variant Annotation](#8-variant-annotation)
-- [9. Proposed Analytical Pipeline](#9-proposed-analytical-pipeline)
-- [10. Project Structure](#10-project-structure)
-- [11. Tools and Technologies](#11-tools-and-technologies)
-- [12. Expected Outputs](#12-expected-outputs)
-- [13. Quality Control and Reproducibility](#13-quality-control-and-reproducibility)
-- [14. Clinical Interpretation Framework](#14-clinical-interpretation-framework)
-- [15. Limitations](#15-limitations)
-- [16. Future Development](#16-future-development)
-- [17. Educational and Professional Relevance](#17-educational-and-professional-relevance)
-- [18. Disclaimer](#18-disclaimer)
-- [19. References](#19-references)
-- [20. Author](#20-author)
+1. Characterize JAK2 V617F at genomic, transcript, and protein levels.
+2. Explain the biological role of JAK2 and the JAK-STAT pathway.
+3. Demonstrate sequence-level verification of the c.1849G>T substitution.
+4. Integrate public database identifiers and evidence.
+5. Establish a reproducible molecular diagnostic workflow.
+6. Provide a structured variant-interpretation framework.
+7. Demonstrate automated computational quality control.
+8. Provide a foundation for future NGS-based MPN analysis.
 
 ---
 
-# 1. Project Overview
-
-## 1.1 Background
-
-Myeloproliferative neoplasms are clonal hematologic malignancies characterized by abnormal proliferation of one or more myeloid cell lineages.
-
-The classical BCR::ABL1-negative MPNs include:
-
-- Polycythemia vera (PV)
-- Essential thrombocythemia (ET)
-- Primary myelofibrosis (PMF)
-
-Molecular abnormalities involving the **JAK-STAT signaling pathway** are central to the pathogenesis of these disorders.
-
-Among these alterations, **JAK2 V617F** represents a major molecular driver and an important diagnostic biomarker.
-
----
-
-## 1.2 Project Aim
-
-The aim of this project is to develop a reproducible molecular and bioinformatics framework for investigating the **JAK2 V617F variant** and demonstrating how sequence-level information can support the molecular diagnosis and interpretation of myeloproliferative neoplasms.
-
----
-
-## 1.3 Specific Objectives
-
-This project seeks to:
-
-1. Characterize the JAK2 V617F mutation at the genomic, transcript, and protein levels.
-2. Describe the biological role of JAK2 in hematopoietic signaling.
-3. Explain how V617F alters JAK2 signaling.
-4. Examine the association of JAK2 V617F with classical MPNs.
-5. Demonstrate a molecular diagnostic workflow for JAK2 V617F.
-6. Explore computational approaches for variant annotation.
-7. Integrate public genomic and clinical databases.
-8. Develop reproducible bioinformatics analyses.
-9. Demonstrate interpretation of a clinically relevant hematologic variant.
-10. Establish a foundation for extending the project toward NGS-based MPN analysis.
-
----
-
-# 2. Biological Background
-
-## 2.1 The JAK-STAT Signaling Pathway
-
-The **Janus kinase–signal transducer and activator of transcription (JAK-STAT)** pathway is an intracellular signaling system involved in the regulation of:
-
-- Hematopoiesis
-- Cell proliferation
-- Cell survival
-- Differentiation
-- Immune signaling
-- Cytokine responses
-
-JAK2 is a non-receptor tyrosine kinase associated with several cytokine receptors.
-
-Under normal physiological conditions, ligand-receptor interaction activates JAK2, resulting in phosphorylation of downstream STAT proteins and regulated transcriptional responses.
-
----
-
-## 2.2 JAK2 Structure
-
-JAK2 contains several functionally important domains, including:
-
-- FERM domain
-- SH2-like region
-- Pseudokinase domain
-- Tyrosine kinase domain
-
-The V617F mutation occurs within the **JH2 pseudokinase domain**.
-
-The pseudokinase domain normally contributes to autoinhibitory regulation of JAK2 kinase activity.
-
----
-
-# 3. The JAK2 V617F Variant
-
-## 3.1 Variant Identity
+## Canonical Variant
 
 | Feature | Annotation |
 |---|---|
 | Gene | **JAK2** |
-| Gene location | **9p24.1** |
-| Variant | **V617F** |
+| Transcript | **NM_004972.4** |
 | HGVS cDNA | **NM_004972.4:c.1849G>T** |
-| Protein consequence | **p.Val617Phe** |
-| Reference amino acid | Valine (V) |
-| Alternate amino acid | Phenylalanine (F) |
-| Variant type | Single-nucleotide variant |
+| Protein | **p.Val617Phe** |
+| Short form | **V617F** |
 | dbSNP | **rs77375493** |
-| GRCh38 position | **chr9:5073770** |
-| Molecular consequence | Missense |
-| Functional domain | JH2 pseudokinase domain |
+| GRCh38 | **NC_000009.12:g.5073770G>T** |
+| Variant class | Missense SNV |
+| Functional region | JH2 pseudokinase domain |
 
 ---
 
-## 3.2 Nucleotide-Level Change
-
-The canonical transcript-level representation is:
+## Repository Workflow
 
 ```text
-Reference: NM_004972.4:c.1849G
-Variant:   NM_004972.4:c.1849T
-```
-
-This nucleotide substitution results in:
-
-```text
-Valine (V)
-     ↓
-Phenylalanine (F)
-
-p.Val617Phe
-```
-
----
-
-## 3.3 Genomic Representation
-
-For GRCh38:
-
-```text
-Chromosome: 9
-Position:   5,073,770
-Reference:  G
-Alternate:  T
+Public reference sequence
+          ↓
+NCBI RefSeq NM_004972.4
+          ↓
+Locate c.1849
+          ↓
+Verify reference G
+          ↓
+Extract codon c.1849–c.1851
+          ↓
+Introduce G → T in silico
+          ↓
+Translate reference / alternate codons
+          ↓
+Verify p.Val617Phe
+          ↓
+Variant evidence / interpretation
+          ↓
+Automated tests + CI
+          ↓
+Reproducible scientific report
 ```
 
 ---
 
-# 4. Molecular Mechanism
-
-The JAK2 V617F mutation disrupts the normal regulatory relationship between the pseudokinase and kinase domains of JAK2.
-
-The resulting molecular effect is inappropriate activation of JAK2 signaling.
-
-A simplified model is:
-
-```text
-JAK2 V617F
-     │
-     ▼
-Loss of normal JAK2 autoinhibition
-     │
-     ▼
-Constitutive JAK2 kinase signaling
-     │
-     ▼
-STAT phosphorylation
-     │
-     ▼
-Altered transcriptional signaling
-     │
-     ├── Increased proliferation
-     ├── Increased cell survival
-     └── Abnormal myeloid expansion
-             │
-             ▼
-     Myeloproliferative neoplasm
-```
-
-This provides a molecular bridge between a single nucleotide substitution and the abnormal hematopoietic phenotype observed in MPNs.
-
----
-
-# 5. Clinical Significance
-
-## 5.1 Polycythemia Vera
-
-JAK2 V617F is particularly strongly associated with **polycythemia vera** and is an important molecular marker in the diagnostic evaluation of suspected disease.
-
----
-
-## 5.2 Essential Thrombocythemia
-
-JAK2 V617F is also detected in a substantial proportion of patients with essential thrombocythemia.
-
-However, absence of JAK2 V617F does **not** exclude ET.
-
-Other important molecular alterations include:
-
-- **CALR**
-- **MPL**
-
----
-
-## 5.3 Primary Myelofibrosis
-
-JAK2 V617F is also frequently observed in primary myelofibrosis.
-
-As with ET, molecular-negative cases require consideration of alternative driver mutations and broader diagnostic evaluation.
-
----
-
-## 5.4 Molecular Driver Landscape
-
-A simplified model of classical MPN driver mutations is:
-
-```text
-                 Classical MPNs
-                       │
-        ┌──────────────┼──────────────┐
-        │              │              │
-       JAK2           CALR           MPL
-        │              │              │
-        └──────────────┼──────────────┘
-                       │
-              JAK-STAT signaling
-                       │
-                       ▼
-             Myeloid proliferation
-```
-
-This project focuses specifically on **JAK2 V617F**, while providing a framework that can later be expanded to CALR and MPL.
-
----
-
-# 6. Molecular Diagnostic Workflow
-
-A conceptual molecular diagnostic workflow is:
-
-```text
-Patient Sample
-     │
-     ▼
-Peripheral Blood / Bone Marrow
-     │
-     ▼
-DNA Extraction
-     │
-     ▼
-DNA Quality Assessment
-     │
-     ▼
-JAK2 Target Amplification
-     │
-     ▼
-PCR / Allele-Specific PCR / NGS
-     │
-     ▼
-Sequence Generation
-     │
-     ▼
-Quality Control
-     │
-     ▼
-Variant Detection
-     │
-     ▼
-JAK2 V617F Identification
-     │
-     ▼
-Bioinformatics Annotation
-     │
-     ▼
-Clinical Interpretation
-     │
-     ▼
-Integration with Clinical,
-Morphological and Laboratory Findings
-```
-
----
-
-# 7. Bioinformatics Workflow
-
-The computational component of the project is designed around the principles of reproducible genomic analysis.
-
-```text
-Raw Sequence / Variant Data
-          │
-          ▼
-      Quality Control
-          │
-          ▼
-      Alignment / Mapping
-          │
-          ▼
-      Variant Calling
-          │
-          ▼
-      Variant Filtering
-          │
-          ▼
-     Variant Annotation
-          │
-          ▼
- ┌────────┼───────────┐
- │        │           │
- ▼        ▼           ▼
-ClinVar  dbSNP      Ensembl
- │        │           │
- └────────┼───────────┘
-          ▼
- Functional Interpretation
-          │
-          ▼
- Clinical Contextualization
-          │
-          ▼
-      Final Report
-```
-
----
-
-# 8. Variant Annotation
-
-The project will incorporate multiple layers of variant annotation.
-
-## 8.1 Genomic Annotation
-
-Questions include:
-
-- What chromosome contains JAK2?
-- What is the genomic coordinate?
-- Which reference genome assembly is being used?
-- What are the reference and alternate alleles?
-
----
-
-## 8.2 Transcript Annotation
-
-The variant will be represented using HGVS nomenclature.
-
-Primary representation:
-
-```text
-NM_004972.4:c.1849G>T
-```
-
----
-
-## 8.3 Protein Annotation
-
-The corresponding protein consequence is:
-
-```text
-p.Val617Phe
-```
-
-or:
-
-```text
-V617F
-```
-
----
-
-## 8.4 Clinical Database Annotation
-
-Relevant databases include:
-
-- ClinVar
-- dbSNP
-- NCBI Gene
-- Ensembl
-- UniProt
-- COSMIC where applicable
-- PubMed
-
-The purpose is to integrate sequence information with established biological and clinical evidence.
-
----
-
-# 9. Proposed Analytical Pipeline
-
-## Step 1 — Retrieve Reference Information
-
-Collect:
-
-- JAK2 reference sequence
-- Reference transcript
-- Protein sequence
-- Genomic coordinates
-- Variant identifiers
-
----
-
-## Step 2 — Verify Variant Nomenclature
-
-Confirm:
-
-```text
-Gene: JAK2
-Transcript: NM_004972.4
-cDNA: c.1849G>T
-Protein: p.Val617Phe
-dbSNP: rs77375493
-```
-
----
-
-## Step 3 — Retrieve Variant Database Evidence
-
-Query public databases for:
-
-- Clinical significance
-- Variant descriptions
-- Disease associations
-- Literature evidence
-- Population frequency
-- Functional information
-
----
-
-## Step 4 — Functional Annotation
-
-Where appropriate, annotation tools may include:
-
-- Ensembl Variant Effect Predictor (VEP)
-- SnpEff
-- ANNOVAR
-- bcftools
-- ClinVar
-
----
-
-## Step 5 — Sequence-Level Analysis
-
-Potential analyses include:
-
-- Reference versus alternate allele comparison
-- Codon analysis
-- Amino acid substitution analysis
-- Transcript consequence prediction
-- Variant visualization
-
----
-
-## Step 6 — Clinical Interpretation
-
-Integrate:
-
-```text
-Molecular result
-       +
-Hematologic phenotype
-       +
-Bone marrow morphology
-       +
-Clinical findings
-       +
-Additional molecular markers
-       ↓
-Integrated diagnostic interpretation
-```
-
----
-
-# 10. Project Structure
-
-The repository is designed to evolve into a reproducible computational research project.
+## Repository Structure
 
 ```text
 JAK2-V617F-Molecular-Diagnosis/
-│
+├── .github/workflows/ci.yml
 ├── README.md
 ├── LICENSE
 ├── CITATION.cff
-│
+├── analysis/
+│   └── JAK2_V617F_Analysis.ipynb
 ├── docs/
 │   ├── molecular_background.md
 │   ├── diagnostic_workflow.md
-│   └── variant_interpretation.md
-│
-├── data/
-│   ├── raw/
-│   └── processed/
-│
-├── analysis/
-│   ├── JAK2_variant_analysis.ipynb
-│   └── variant_annotation.ipynb
-│
-├── scripts/
-│   ├── variant_annotation.py
-│   └── generate_summary.py
-│
+│   ├── sequence_analysis.md
+│   ├── variant_interpretation.md
+│   └── JAK2_V617F_Academic_Project_Report.md
 ├── figures/
-│   ├── jak2_structure.png
-│   ├── jak_stat_pathway.png
-│   ├── diagnostic_workflow.png
-│   └── variant_visualization.png
-│
-└── references/
-    └── references.bib
+│   └── jak2_v617f_sequence_consequence.svg
+├── scripts/
+│   ├── jak2_v617f_analysis.py
+│   ├── public_variant_annotation.py
+│   ├── reference_sequence_analysis.py
+│   └── sequence_level_analysis.py
+└── tests/
+    ├── test_jak2_analysis.py
+    └── test_reference_sequence_analysis.py
 ```
 
-Files and directories will be added progressively as the analytical component of the project develops.
+---
+
+## Running the Sequence Analysis
+
+```bash
+python scripts/reference_sequence_analysis.py
+```
+
+To save a structured JSON result:
+
+```bash
+python scripts/reference_sequence_analysis.py --output results/jak2_v617f_sequence.json
+```
+
+The script retrieves the reference sequence from NCBI rather than storing a copied third-party sequence in the repository. This keeps the workflow traceable to the accession and reduces the risk of maintaining an untracked local reference copy.
 
 ---
 
-# 11. Tools and Technologies
+## Running Tests
 
-## Molecular Biology
+The deterministic unit tests can be run with:
 
-- PCR
-- Allele-specific PCR
-- Sanger sequencing
-- Next-generation sequencing
-- DNA extraction
-- Molecular variant detection
+```bash
+python -m unittest discover -s tests -p 'test_*.py'
+```
 
-## Bioinformatics
-
-- Python
-- Jupyter Notebook
-- Linux
-- Bash
-- Git
-- GitHub
-- Biopython
-- bcftools
-- VEP
-- SnpEff
-
-## Genomic Databases
-
-- NCBI
-- ClinVar
-- dbSNP
-- Ensembl
-- UniProt
-- COSMIC
-- PubMed
-
-## Visualization
-
-Potential visualization approaches include:
-
-- Sequence visualization
-- Variant diagrams
-- JAK2 domain maps
-- Molecular pathway diagrams
-- Variant annotation plots
-- Workflow schematics
+GitHub Actions also performs automated Python quality checks across supported Python versions.
 
 ---
 
-# 12. Expected Outputs
+## Scientific Interpretation
 
-The completed project is intended to produce:
+JAK2 V617F occurs in the JH2 pseudokinase domain and disrupts normal negative regulation of JAK2 kinase activity, contributing to constitutive JAK-STAT signaling. The variant is strongly associated with classical MPNs, especially PV, and is also detected in ET and PMF.
 
-### 12.1 Scientific Outputs
-
-- Molecular characterization of JAK2 V617F
-- Variant annotation
-- Protein consequence analysis
-- Clinical significance assessment
-- Literature-supported interpretation
-
-### 12.2 Computational Outputs
-
-- Reproducible scripts
-- Jupyter notebooks
-- Annotated variant files
-- Summary tables
-- Visualizations
-
-### 12.3 Portfolio Outputs
-
-- Professional GitHub repository
-- Scientific documentation
-- Reproducible analysis
-- Molecular diagnostic workflow
-- Bioinformatics case study
+A molecular result must be interpreted with the patient's hematologic phenotype, morphology, clinical findings, assay characteristics, and additional molecular markers where appropriate. Absence of JAK2 V617F does not by itself exclude an MPN.
 
 ---
 
-# 13. Quality Control and Reproducibility
+## Reproducibility and Quality Assurance
 
-Reproducibility is a central principle of this project.
+The project records:
 
-The analytical workflow will document:
-
-- Reference genome assembly
-- Reference transcript version
-- Database versions
-- Software versions
+- Reference transcript/accession
+- Genome assembly
+- HGVS representation
+- Database identifiers
 - Analysis parameters
-- Input data
-- Processing steps
-- Output files
-
-Where possible, computational analyses should be executable from documented scripts or notebooks.
-
----
-
-## Reproducibility Principle
-
-```text
-Input Data
-    ↓
-Documented Parameters
-    ↓
-Versioned Software
-    ↓
-Reproducible Analysis
-    ↓
-Traceable Output
-```
-
-This approach allows another researcher or trainee to reproduce and independently evaluate the analysis.
-
----
-
-# 14. Clinical Interpretation Framework
-
-Molecular testing should not be interpreted in isolation.
-
-A JAK2 V617F result should be considered alongside:
-
-### Hematologic findings
-
-- Hemoglobin
-- Hematocrit
-- Red blood cell count
-- White blood cell count
-- Platelet count
-- Differential count
-
-### Morphology
-
-- Peripheral blood film
-- Bone marrow morphology
-
-### Clinical findings
-
-- Thrombosis
-- Splenomegaly
-- Constitutional symptoms
-- Other disease-specific findings
-
-### Molecular findings
-
-- JAK2
-- CALR
-- MPL
-- Additional myeloid-associated mutations where indicated
-
----
-
-## Integrated Interpretation
-
-```text
-Clinical Presentation
-        +
-CBC / Hematology
-        +
-Peripheral Blood Morphology
-        +
-Bone Marrow Findings
-        +
-Molecular Testing
-        +
-Bioinformatics Annotation
-        ↓
-Integrated Diagnostic Assessment
-```
-
-This project therefore presents JAK2 V617F as a **molecular diagnostic biomarker**, rather than treating a positive molecular result as a standalone diagnosis.
-
----
-
-# 15. Limitations
-
-Several limitations should be considered.
-
-1. This repository is primarily an educational and portfolio project.
-2. Public database annotations may change over time.
-3. Variant interpretation depends on the reference genome and transcript version.
-4. Molecular findings must be interpreted within appropriate clinical context.
-5. Absence of JAK2 V617F does not exclude an MPN.
-6. Different molecular assays have different analytical sensitivities.
-7. Variant allele frequency may be influenced by assay design, disease burden, sample composition, and sequencing methodology.
-8. Public database classifications may represent different clinical contexts and should not automatically be transferred between germline and somatic interpretation frameworks.
-9. Computational predictions do not replace laboratory validation or clinical judgment.
-
----
-
-# 16. Future Development
-
-The project will progressively evolve toward a broader computational MPN molecular diagnostics platform.
-
-## Phase I — JAK2 V617F
-
-- Reference sequence analysis
-- Variant annotation
-- Molecular mechanism
-- Diagnostic workflow
-- Database integration
-
-## Phase II — Molecular Comparison
-
-Expand to:
-
-```text
-JAK2
-CALR
-MPL
-```
-
-and compare their:
-
-- Molecular mechanisms
-- Disease associations
-- Diagnostic applications
-- Variant characteristics
-
-## Phase III — NGS Analysis
-
-Develop a simulated or publicly available variant-analysis workflow involving:
-
-```text
-FASTQ
-  ↓
-Quality Control
-  ↓
-Alignment
-  ↓
-BAM Processing
-  ↓
-Variant Calling
-  ↓
-VCF
-  ↓
-Annotation
-  ↓
-Clinical Interpretation
-```
-
-## Phase IV — Computational Dashboard
-
-Potential future development of a lightweight application capable of:
-
-- Accepting variant information
-- Annotating JAK2 variants
-- Displaying genomic and protein consequences
-- Linking to public databases
-- Producing an interpretable molecular summary
-
----
-
-# 17. Educational and Professional Relevance
-
-This project demonstrates the intersection of several disciplines:
-
-```text
-Medical Laboratory Science
-            │
-            ├── Hematology
-            │
-            ├── Molecular Diagnostics
-            │
-            ├── Molecular Biology
-            │
-            ├── Genomics
-            │
-            └── Bioinformatics
-                    │
-                    ▼
-             Precision Medicine
-```
-
-The project is particularly relevant to the growing integration of laboratory medicine with genomic and computational technologies.
-
-It demonstrates a workflow in which a laboratory scientist can move beyond conventional test interpretation toward:
-
-- Molecular characterization
-- Genomic data analysis
-- Variant annotation
-- Computational biology
-- Evidence-based interpretation
-- Reproducible research
-
----
-
-# 18. Disclaimer
-
-This repository is intended for **educational, research, and professional portfolio purposes**.
-
-It is not intended to provide medical advice, establish a clinical diagnosis, or replace validated laboratory procedures, professional guidelines, or qualified clinical interpretation.
-
-Any clinical application of molecular testing must be performed using appropriately validated methods within a qualified diagnostic laboratory and interpreted in the context of relevant clinical and laboratory information.
-
----
-
-# 19. References
-
-The following resources form the foundation for the molecular and clinical framework of this project.
-
-1. **NCBI ClinVar.** JAK2 NM_004972.4:c.1849G>T (p.Val617Phe). Variation ID 14662.
-
-2. **NCBI ClinVar.** JAK2 V617F and Polycythemia Vera. ClinVar records describing the association between the variant and polycythemia vera.
-
-3. **NCBI ClinVar.** JAK2 V617F and Primary Myelofibrosis.
-
-4. James C, et al. A unique clonal JAK2 mutation leading to constitutive signalling causes polycythaemia vera. *Nature*. 2005.
-
-5. Baxter EJ, et al. Acquired mutation of the tyrosine kinase JAK2 in human myeloproliferative disorders. *Lancet*. 2005.
-
-6. Kralovics R, et al. A gain-of-function mutation of JAK2 in myeloproliferative disorders. *New England Journal of Medicine*. 2005.
-
-7. Vainchenker W, Kralovics R. Genetic basis and molecular pathophysiology of classical myeloproliferative neoplasms. *Blood*. 2017.
-
-8. Barbui T, et al. International diagnostic criteria and classification frameworks for myeloproliferative neoplasms.
-
-9. Arber DA, et al. The International Consensus Classification of myeloid neoplasms and acute leukemias. *Blood*. 2022.
-
-10. Khoury JD, et al. The 5th edition of the World Health Organization classification of haematolymphoid tumours: myeloid and histiocytic/dendritic neoplasms. *Leukemia*. 2022.
-
-11. Richards S, et al. Standards and guidelines for the interpretation of sequence variants: ACMG/AMP recommendations. *Genetics in Medicine*. 2015.
-
-12. McCarthy DJ, et al. Variant Effect Predictor and genomic variant annotation resources.
-
----
-
-# 20. Author
-
-## Daniel Hananiya
-
-**Medical Laboratory Scientist | Molecular Biology Researcher | Bioinformatics Enthusiast**
-
-My interests lie at the intersection of:
-
-- Medical Laboratory Science
-- Molecular Biology
-- Hematology
-- Genomics
-- Bioinformatics
-- Molecular Diagnostics
-- Computational Biology
-- Precision Medicine
-
-This repository represents part of an ongoing effort to integrate laboratory science with computational approaches to biomedical research.
-
----
-
-## Project Philosophy
-
-> **From the laboratory bench to the genome, and from genomic data to biological meaning.**
-
-The objective is not simply to identify a mutation.
-
-It is to understand:
-
-```text
-What changed?
-     ↓
-Where did it change?
-     ↓
-How did it change?
-     ↓
-What does the change do?
-     ↓
-Why does it matter biologically?
-     ↓
-How can it contribute to diagnosis?
-```
-
----
-
-## Repository Status
-
-**Current stage:** Initial development
-
-The repository will be expanded progressively with:
-
+- Python scripts
+- Jupyter analysis
+- Automated tests
+- GitHub Actions workflow
 - Scientific documentation
-- Bioinformatics workflows
-- Variant annotation
-- Computational analyses
-- Figures
-- Jupyter notebooks
-- Reproducible scripts
-- Literature-supported interpretation
+
+The live NCBI retrieval step is intentionally separated from deterministic unit tests so that the core sequence logic can be tested without network dependence.
+
+---
+
+## Limitations
+
+This project is not a validated clinical diagnostic assay. Public database annotations may change, and variant interpretation depends on reference versions, assay methodology, disease context, and clinical evidence. Computational verification of a sequence consequence does not replace laboratory validation or clinical judgment.
+
+---
+
+## Academic Project Report
+
+A full academic-style report covering the background, objectives, methodology, sequence analysis, diagnostic workflow, interpretation, reproducibility, limitations, conclusions, and references is available at:
+
+`docs/JAK2_V617F_Academic_Project_Report.md`
 
 ---
 
 ## Citation
 
-If this project is referenced in academic, educational, or professional work, please cite:
+**Hananiya, D. (2026). JAK2 V617F Molecular Diagnosis: Molecular Characterization, Diagnostic Interpretation, and Bioinformatics Analysis of the JAK2 V617F Variant in Myeloproliferative Neoplasms. GitHub.**
 
-**Hananiya, D. JAK2 V617F Molecular Diagnosis: Molecular Characterization, Diagnostic Interpretation, and Bioinformatics Analysis of the JAK2 V617F Variant in Myeloproliferative Neoplasms. GitHub.**
+See `CITATION.cff` for machine-readable citation metadata.
 
 ---
 
-**Author:** Daniel Hananiya  
-**Repository:** `DanielhananiyaML/JAK2-V617F-Molecular-Diagnosis`  
-**License:** MIT
+## Author
+
+**Daniel Hananiya**  
+Medical Laboratory Scientist | Molecular Biology Researcher | Bioinformatics Enthusiast
+
+### Project Philosophy
+
+> **From the laboratory bench to the genome, and from genomic data to biological meaning.**
+
+---
+
+## Disclaimer
+
+This repository is intended for **educational, research, and professional portfolio purposes**. It does not provide medical advice, establish a clinical diagnosis, or replace validated laboratory procedures, professional guidelines, or qualified clinical interpretation.
