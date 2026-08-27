@@ -4,9 +4,9 @@
 
 This workflow moves the project from static variant metadata to direct sequence-level verification of the canonical JAK2 V617F consequence.
 
-The reference transcript is **NM_004972.4**, which NCBI identifies as the RefSeq mRNA for human JAK2 transcript variant 1. citeturn0search1
+The reference transcript is **NM_004972.4**, the NCBI RefSeq mRNA record for human JAK2 transcript variant 1.
 
-The target variant is **NM_004972.4:c.1849G>T**, producing **p.Val617Phe (V617F)**. ClinVar reports the corresponding GRCh38 genomic representation as **NC_000009.12:g.5073770G>T** and links the variant to **rs77375493**. citeturn0search0turn0search2
+The target variant is **NM_004972.4:c.1849G>T**, producing **p.Val617Phe (V617F)**. ClinVar reports the corresponding GRCh38 genomic representation as **NC_000009.12:g.5073770G>T** and links the variant to **rs77375493**.
 
 ## Computational logic
 
@@ -56,7 +56,7 @@ The runtime sequence is retrieved from NCBI rather than storing a copied referen
 
 ## Biological interpretation
 
-ClinVar describes JAK2 V617F as a somatic G-to-T transversion producing a Val617Phe substitution in the negative-regulatory JH2 domain and associates it with classical myeloproliferative neoplasms. citeturn0search7
+ClinVar describes JAK2 V617F as a somatic G-to-T transversion producing a Val617Phe substitution in the negative-regulatory JH2 domain and associates it with classical myeloproliferative neoplasms.
 
 The computational sequence analysis therefore establishes the chain:
 
