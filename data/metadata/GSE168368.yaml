@@ -1,0 +1,16 @@
+accession: GSE168368
+bioproject: PRJNA707039
+sra: SRP310755
+organism: Homo sapiens
+assay: transcriptome profiling
+biological_material: megakaryocyte-erythroid progenitors
+sample_count: 29
+groups:
+  PV: 9
+  ET: 12
+  NC: 8
+processed_file: GSE168368_gene_count_matrix.csv.gz
+source: NCBI GEO
+analysis_role: real public MPN expression evidence
+variant_calling: false
+note: This dataset provides expression-level MPN context and is not a direct JAK2 V617F variant-calling dataset.
