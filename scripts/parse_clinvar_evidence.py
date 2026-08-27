@@ -17,8 +17,8 @@ def summarize(record: dict) -> dict:
         "variant": "NM_004972.4:c.1849G>T (p.Val617Phe)",
         "dbSNP": "rs77375493",
         "GRCh38": "chr9:5073770G>T",
-        "somatic_context": "JAK2 V617F is a recurrent acquired driver in classical MPNs",
-        "evidence_note": "ClinVar contains condition-specific assertions; interpret by disease context and origin.",
+        "somatic_context": "JAK2 V617F is a recurrent acquired somatic driver in classical MPNs",
+        "evidence_note": "ClinVar contains condition-specific assertions; interpret by disease context and variant origin.",
         "record_size_bytes": len(text.encode("utf-8")),
     }
 
