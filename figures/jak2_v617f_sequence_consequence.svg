@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650">
+  <rect width="1200" height="650" fill="white"/>
+  <text x="600" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700">JAK2 V617F — Sequence-Level Consequence</text>
+  <text x="600" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="20">NM_004972.4:c.1849G&gt;T → p.Val617Phe</text>
+  <text x="100" y="190" font-family="Arial, sans-serif" font-size="24" font-weight="700">Reference</text>
+  <rect x="100" y="220" width="300" height="100" rx="14" fill="#f4f4f4" stroke="#222" stroke-width="2"/>
+  <text x="250" y="265" text-anchor="middle" font-family="monospace" font-size="34">GTT</text>
+  <text x="250" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="20">Valine (V)</text>
+  <text x="600" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="30">G → T</text>
+  <line x1="410" y1="270" x2="790" y2="270" stroke="#222" stroke-width="3"/>
+  <polygon points="790,270 765,255 765,285" fill="#222"/>
+  <text x="800" y="190" font-family="Arial, sans-serif" font-size="24" font-weight="700">Variant</text>
+  <rect x="800" y="220" width="300" height="100" rx="14" fill="#f4f4f4" stroke="#222" stroke-width="2"/>
+  <text x="950" y="265" text-anchor="middle" font-family="monospace" font-size="34">TTT</text>
+  <text x="950" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="20">Phenylalanine (F)</text>
+  <line x1="600" y1="360" x2="600" y2="455" stroke="#222" stroke-width="3"/>
+  <polygon points="600,455 585,430 615,430" fill="#222"/>
+  <rect x="275" y="475" width="650" height="90" rx="16" fill="#f4f4f4" stroke="#222" stroke-width="2"/>
+  <text x="600" y="515" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700">p.Val617Phe (V617F)</text>
+  <text x="600" y="545" text-anchor="middle" font-family="Arial, sans-serif" font-size="18">JH2 pseudokinase-domain variant</text>
+  <text x="600" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="16">Educational/research visualization — not a clinical diagnostic report</text>
+</svg>
