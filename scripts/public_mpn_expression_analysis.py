@@ -2,20 +2,15 @@
 """Reproducible retrieval and summary of public GSE168368 count data.
 
 GSE168368 is an expression-profiling study with 29 GEO samples. The
-supplementary processed count matrix may contain fewer sample columns than
-the complete Series record. This script therefore reports both the Series
-sample count and the sample columns actually present in the processed matrix,
-rather than treating them as interchangeable.
-
-The dataset is expression data, not a variant-calling dataset. The script
-summarizes sample groups and JAK2 expression when the public count matrix is
-supplied, without claiming direct detection of JAK2 V617F.
+processed count matrix is checked against the complete Series record.
+The dataset is expression data, not a variant-calling dataset.
 """
 from __future__ import annotations
 
 import argparse
 import hashlib
 import json
+import re
 import urllib.request
 from pathlib import Path
 
@@ -24,6 +19,13 @@ ACCESSION = "GSE168368"
 BIOPROJECT = "PRJNA707039"
 SERIES_SAMPLE_COUNT = 29
 SERIES_GROUP_COUNTS = {"PV": 9, "ET": 12, "NC": 8}
+
+# Common identifiers for the human JAK2 gene. The processed GEO matrix may
+# use Ensembl IDs, Entrez IDs, or gene symbols, so matching must not assume
+# that the first column contains HGNC symbols.
+JAK2_ENSEMBL = "ENSG00000096968"
+JAK2_ENTREZ = "3717"
+JAK2_SYMBOL = "JAK2"
 
 
 def sha256(path: Path) -> str:
@@ -47,6 +49,17 @@ def classify_sample(name: str) -> str | None:
     return None
 
 
+def normalize_gene_id(value: object) -> str:
+    """Normalize common versioned Ensembl identifiers for matching."""
+    value = str(value).strip().upper()
+    return re.sub(r"\.\d+$", "", value)
+
+
+def is_jak2_identifier(value: object) -> bool:
+    normalized = normalize_gene_id(value)
+    return normalized in {JAK2_ENSEMBL, JAK2_ENTREZ, JAK2_SYMBOL}
+
+
 def summarize(matrix: Path, output: Path) -> None:
     import pandas as pd
 
@@ -59,8 +72,8 @@ def summarize(matrix: Path, output: Path) -> None:
             groups[group] += 1
 
     gene_col = df.columns[0]
-    gene_values = df[gene_col].astype(str).str.upper()
-    jak2_rows = df.index[gene_values.eq("JAK2")].tolist()
+    gene_values = df[gene_col].astype(str)
+    jak2_rows = df.index[gene_values.map(is_jak2_identifier)].tolist()
 
     result = {
         "accession": ACCESSION,
@@ -74,12 +87,14 @@ def summarize(matrix: Path, output: Path) -> None:
         "matrix_sample_count": len(sample_columns),
         "matrix_group_counts": groups,
         "gene_identifier_column": str(gene_col),
+        "jak2_identifiers_checked": [JAK2_SYMBOL, JAK2_ENTREZ, JAK2_ENSEMBL],
         "jak2_row_count": len(jak2_rows),
         "jak2_expression": {},
         "interpretation": (
             "Expression dataset; not a direct JAK2 V617F variant-calling dataset. "
             "Series-level sample count and processed-matrix sample count are "
-            "reported separately."
+            "reported separately. JAK2 expression is extracted by matching "
+            "common human Ensembl, Entrez, or HGNC identifiers."
         ),
     }
 
