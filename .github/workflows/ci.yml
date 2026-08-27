@@ -61,9 +61,17 @@ jobs:
           d = json.loads(p.read_text())
           assert d['accession'] == 'GSE168368'
           assert d['bioproject'] == 'PRJNA707039'
-          assert len(d['sample_columns']) == 29
-          assert d['group_counts'] == {'PV': 9, 'ET': 12, 'NC': 8}
-          print('Runtime validation passed:', d['group_counts'])
-          print('Matrix rows:', d['rows'])
-          print('SHA256:', d['sha256'])
+          assert d['series_sample_count'] == 29
+          assert d['series_group_counts'] == {'PV': 9, 'ET': 12, 'NC': 8}
+          assert d['matrix_sample_count'] > 0
+          assert sum(d['matrix_group_counts'].values()) == d['matrix_sample_count']
+          assert d['jak2_row_count'] in (0, 1)
+          if d['jak2_row_count'] == 1:
+              assert len(d['jak2_expression']) == d['matrix_sample_count']
+          print('Runtime validation passed')
+          print('Series samples:', d['series_sample_count'])
+          print('Matrix samples:', d['matrix_sample_count'])
+          print('Matrix groups:', d['matrix_group_counts'])
+          print('JAK2 rows:', d['jak2_row_count'])
+          print('Matrix SHA256:', d['sha256'])
           PY
