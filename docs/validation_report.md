@@ -54,7 +54,7 @@ This separation prevents a synthetic fixture from being mistaken for authoritati
 
 ## 5. Automated quality control
 
-The repository's GitHub Actions workflow has been configured to exercise the deterministic test suite across supported Python versions and to run the public-data analysis component. The latest pre-finalization CI evidence was green across the supported Python matrix and public-data runtime.
+The repository's GitHub Actions workflow exercises the deterministic test suite across the supported Python matrix and runs the public-data analysis component. The final post-commit CI run completed successfully, including the public-data runtime and runtime-summary validation, on the final repository state used for release preparation.
 
 ## 6. Biological interpretation safety
 
@@ -93,6 +93,10 @@ The canonical variant identity and molecular consequence are internally consiste
 
 The analysis engine, deterministic tests, notebook validation path, and CI workflow provide a reproducible computational structure.
 
+### Public-data runtime: PASS
+
+The final CI workflow successfully executed the GSE168368 public-data analysis component and validated its runtime summary on the final repository state used for release preparation.
+
 ### Clinical safety boundary: PASS
 
 The project does not claim clinical assay validation or provide patient-management recommendations.
@@ -101,9 +105,9 @@ The project does not claim clinical assay validation or provide patient-manageme
 
 README, workflow documentation, academic report, citation metadata, limitations, and this validation report are present.
 
-### Release readiness: CONDITIONAL PASS
+### Release readiness: PASS
 
-The repository is scientifically safe to present as a **research/educational portfolio project**. Before assigning a formal `v1.0.0` release tag, the final post-commit GitHub Actions run should be confirmed green on the exact final commit.
+The repository is scientifically safe to present as a **research/educational portfolio project**. The final post-commit CI run has been confirmed green, including the public-data runtime. No additional scientific functionality is required for release readiness.
 
 ## 11. Validation references
 
