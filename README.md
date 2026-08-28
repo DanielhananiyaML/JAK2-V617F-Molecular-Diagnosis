@@ -3,9 +3,9 @@
 ## Molecular Characterization, Diagnostic Interpretation, and Bioinformatics Analysis of the JAK2 V617F Variant in Myeloproliferative Neoplasms
 
 **Author:** Daniel Hananiya  
-**Field:** Medical Laboratory Science | Molecular Biology | Bioinformatics | Molecular Diagnostics  
+**Field:** Medical Laboratory Science | Molecular Biology | Molecular Diagnostics | Bioinformatics & Genomics  
 **Project Type:** Molecular Hematology / Bioinformatics Portfolio Project  
-**Status:** **Completed reproducible portfolio workflow**  
+**Status:** **Final validation completed; reproducible research workflow**  
 **Focus:** JAK2 V617F • Myeloproliferative Neoplasms • Molecular Diagnostics • Variant Interpretation • Sequence Analysis
 
 ---
@@ -16,11 +16,30 @@ The **JAK2 V617F mutation** is a major acquired molecular driver of the classica
 
 This repository presents a reproducible molecular hematology and bioinformatics case study integrating molecular biology, sequence analysis, public genomic resources, variant interpretation, diagnostic reasoning, automated testing, and scientific documentation.
 
-The focal variant is **JAK2 NM_004972.4:c.1849G>T (p.Val617Phe; V617F)**, linked to **rs77375493** and represented on GRCh38 as **NC_000009.12:g.5073770G>T**. The computational workflow retrieves the reference transcript from NCBI at runtime, verifies the reference nucleotide at c.1849, extracts the affected codon, introduces the G>T substitution in silico, translates the reference and alternate codons, and confirms the Valine-to-Phenylalanine consequence.
+The focal variant is **JAK2 NM_004972.4:c.1849G>T (p.Val617Phe; V617F)**, linked to **rs77375493** and represented on GRCh38 as **NC_000009.12:g.5073770G>T**. The production analysis engine retrieves the versioned reference transcript from NCBI at runtime, verifies the reference nucleotide at c.1849, extracts the affected codon, introduces the G>T substitution in silico, translates the reference and alternate codons, and confirms the Valine-to-Phenylalanine consequence.
 
 The project is explicitly designed as an **educational/research and professional portfolio workflow, not a validated clinical diagnostic assay**.
 
 > **DNA variant → transcript annotation → codon change → amino-acid consequence → JAK2 signaling dysregulation → MPN molecular context**
+
+---
+
+## Final Validation Status
+
+The final validation layer covers:
+
+- canonical HGVS identity: `NM_004972.4:c.1849G>T`
+- protein consequence: `p.Val617Phe`
+- canonical codon change: `GTC → TTC`
+- dbSNP identifier: `rs77375493`
+- GRCh38 genomic representation: `NC_000009.12:g.5073770G>T`
+- deterministic sequence-analysis unit tests
+- automated GitHub Actions testing
+- public-data runtime validation already incorporated into the repository CI workflow
+- provenance and limitation documentation
+- independent cross-check against current ClinVar and peer-reviewed literature
+
+See [`docs/validation_report.md`](docs/validation_report.md) for the final scientific-safety checklist and evidence trail.
 
 ---
 
@@ -33,7 +52,7 @@ The project is explicitly designed as an **educational/research and professional
 5. Establish a reproducible molecular diagnostic workflow.
 6. Provide a structured variant-interpretation framework.
 7. Demonstrate automated computational quality control.
-8. Provide a foundation for future NGS-based MPN analysis.
+8. Provide a foundation for future MPN variant-analysis workflows.
 
 ---
 
@@ -56,7 +75,7 @@ The project is explicitly designed as an **educational/research and professional
 ## Repository Workflow
 
 ```text
-Public reference sequence
+Versioned public reference
           ↓
 NCBI RefSeq NM_004972.4
           ↓
@@ -96,6 +115,7 @@ JAK2-V617F-Molecular-Diagnosis/
 │   ├── diagnostic_workflow.md
 │   ├── sequence_analysis.md
 │   ├── variant_interpretation.md
+│   ├── validation_report.md
 │   └── JAK2_V617F_Academic_Project_Report.md
 ├── figures/
 │   └── jak2_v617f_sequence_consequence.svg
@@ -111,7 +131,7 @@ JAK2-V617F-Molecular-Diagnosis/
 
 ---
 
-## Running the Sequence Analysis
+## Running the Production Sequence Analysis
 
 ```bash
 python scripts/reference_sequence_analysis.py
@@ -123,7 +143,11 @@ To save a structured JSON result:
 python scripts/reference_sequence_analysis.py --output results/jak2_v617f_sequence.json
 ```
 
-The script retrieves the reference sequence from NCBI rather than storing a copied third-party sequence in the repository. This keeps the workflow traceable to the accession and reduces the risk of maintaining an untracked local reference copy.
+The production script retrieves the reference sequence from NCBI rather than storing a copied third-party sequence in the repository. This keeps the workflow traceable to the accession and reduces the risk of maintaining an untracked local reference copy.
+
+### Offline validation
+
+The notebook also contains a clearly labelled deterministic offline fixture for validating the sequence-analysis logic when external network access is unavailable. The fixture is **synthetic test data and is not presented as the NCBI biological reference sequence**.
 
 ---
 
@@ -135,7 +159,7 @@ The deterministic unit tests can be run with:
 python -m unittest discover -s tests -p 'test_*.py'
 ```
 
-GitHub Actions also performs automated Python quality checks across supported Python versions.
+GitHub Actions performs automated testing across supported Python versions and includes the repository's public-data runtime validation.
 
 ---
 
@@ -144,6 +168,8 @@ GitHub Actions also performs automated Python quality checks across supported Py
 JAK2 V617F occurs in the JH2 pseudokinase domain and disrupts normal negative regulation of JAK2 kinase activity, contributing to constitutive JAK-STAT signaling. The variant is strongly associated with classical MPNs, especially PV, and is also detected in ET and PMF.
 
 A molecular result must be interpreted with the patient's hematologic phenotype, morphology, clinical findings, assay characteristics, and additional molecular markers where appropriate. Absence of JAK2 V617F does not by itself exclude an MPN.
+
+Database classifications must be interpreted in the correct **variant-origin and disease context**. ClinVar aggregate germline classifications should not be presented as equivalent to a somatic MPN oncogenicity assertion.
 
 ---
 
@@ -161,14 +187,19 @@ The project records:
 - Automated tests
 - GitHub Actions workflow
 - Scientific documentation
+- Validation and limitation statements
 
 The live NCBI retrieval step is intentionally separated from deterministic unit tests so that the core sequence logic can be tested without network dependence.
 
 ---
 
-## Limitations
+## Limitations and Scientific Safety
 
-This project is not a validated clinical diagnostic assay. Public database annotations may change, and variant interpretation depends on reference versions, assay methodology, disease context, and clinical evidence. Computational verification of a sequence consequence does not replace laboratory validation or clinical judgment.
+This project is **not a validated clinical diagnostic assay**. It does not establish a patient's disease status and must not be used to make treatment or patient-management decisions.
+
+Public database annotations may change. Variant interpretation depends on reference versions, assay methodology, disease context, specimen type, allele burden, and clinical evidence. Computational verification of a sequence consequence does not replace laboratory validation or clinical judgment.
+
+For clinical use, testing should be performed using appropriately validated laboratory methods and interpreted within current professional diagnostic frameworks.
 
 ---
 
@@ -191,7 +222,7 @@ See `CITATION.cff` for machine-readable citation metadata.
 ## Author
 
 **Daniel Hananiya**  
-Medical Laboratory Scientist | Molecular Biology Researcher | Bioinformatics Enthusiast
+Medical Laboratory Scientist | Molecular Biology Researcher | Molecular Diagnostics | Bioinformatics & Genomics
 
 ### Project Philosophy
 
